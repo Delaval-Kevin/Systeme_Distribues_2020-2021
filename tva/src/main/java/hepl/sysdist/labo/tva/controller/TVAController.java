@@ -9,11 +9,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 
 @RestController
-public class TVAController {
-
+public class TVAController
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Autowired
     private HashMap<String, Float> tvaList;
 
+    /********************************/
+    /*           Methodes           */
+    /********************************/
     @GetMapping("/tva")
     public TVAResponse getTva(@RequestParam(defaultValue = "default") String category)
     {

@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface ClientDao extends JpaRepository<Client, Integer> {
+public interface ClientDao extends JpaRepository<Client, Integer>
+{
 
     Client getClientById(int Id);
 

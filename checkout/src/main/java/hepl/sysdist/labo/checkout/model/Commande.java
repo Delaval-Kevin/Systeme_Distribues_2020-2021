@@ -1,24 +1,14 @@
-package hepl.sysdist.labo.order.model;
+package hepl.sysdist.labo.checkout.model;
 
-
-import javax.persistence.*;
-import java.util.List;
-
-@Entity
 public class Commande
 {
     /********************************/
     /*           Variables          */
     /********************************/
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int clientId;
-    private OrderStatus status;
     private float total;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<OrderItem> items;
+    private boolean express;
 
     /********************************/
     /*         Constructeurs        */
@@ -44,14 +34,6 @@ public class Commande
         this.clientId = clientId;
     }
 
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
     public float getTotal() {
         return total;
     }
@@ -60,11 +42,11 @@ public class Commande
         this.total = total;
     }
 
-    public List<OrderItem> getItems() {
-        return items;
+    public boolean isExpress() {
+        return express;
     }
 
-    public void setItems(List<OrderItem> items) {
-        this.items = items;
+    public void setExpress(boolean express) {
+        this.express = express;
     }
 }
