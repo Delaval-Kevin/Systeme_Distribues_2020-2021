@@ -11,6 +11,7 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
     public int idArticle;
+    public float price;
     public int quantity;
 
     public OrderItem() {
