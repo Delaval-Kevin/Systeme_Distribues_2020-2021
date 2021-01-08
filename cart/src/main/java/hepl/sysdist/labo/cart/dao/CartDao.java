@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.ArrayList;
 
-public interface CartDao extends JpaRepository<CartItem, Integer> {
+public interface CartDao extends JpaRepository<CartItem, Integer>
+{
 
     ArrayList<CartItem> getCartItemsByClientId(int clientId);
+
     CartItem getCartItemByClientIdAndItemId(int clientId, int itemId);
 
 }

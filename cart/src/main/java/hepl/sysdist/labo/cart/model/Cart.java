@@ -2,13 +2,21 @@ package hepl.sysdist.labo.cart.model;
 
 import java.util.ArrayList;
 
-public class Cart {
-
+public class Cart
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     private ArrayList<CartItem> cartItems;
 
-    public Cart() {
-    }
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
+    public Cart() { }
 
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
     public ArrayList<CartItem> getCartItems() {
         return cartItems;
     }

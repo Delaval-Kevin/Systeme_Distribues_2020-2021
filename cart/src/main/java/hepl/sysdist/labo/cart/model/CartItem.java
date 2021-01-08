@@ -9,20 +9,26 @@ import javax.persistence.Id;
 
 @Entity
 @JsonIgnoreProperties({"id", "clientId"})
-public class CartItem {
-
+public class CartItem
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private int clientId;
-
     private int itemId;
     private int quantity;
 
-    public CartItem() {
-    }
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
+    public CartItem() { }
 
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
     public int getId() {
         return itemId;
     }
@@ -46,7 +52,6 @@ public class CartItem {
     public void setItemId(int item_id) {
         this.itemId = item_id;
     }
-
 
     public int getClientId() {
         return clientId;

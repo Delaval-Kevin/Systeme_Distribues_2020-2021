@@ -7,11 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class CartController {
-
+public class CartController
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Autowired
     private CartDao cartDao;
 
+    /********************************/
+    /*           Methodes           */
+    /********************************/
     @GetMapping("/item/{client_id}")
     public Cart getCart(@PathVariable int client_id){
         Cart cart = new Cart();
