@@ -4,6 +4,7 @@
 
 package hepl.sysdist.labo.api.controller;
 
+import hepl.sysdist.labo.api.models.Cart.CartAddRequest;
 import hepl.sysdist.labo.api.models.StockListResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,19 +20,13 @@ public class IndexController {
     @Autowired
     private RestTemplate restTemplate;
 
-    @GetMapping("/cart")
-    public String cart(Model model)
-    {
-        model.addAttribute("title", "Cart");
-        return "cart";
-    }
-
     @GetMapping(value = {"/", "/shop"})
     public String greeting(Model model)
     {
 
         StockListResult response = restTemplate.getForObject("http://stock/articles", StockListResult.class);
 
+        model.addAttribute("cartAddRequest", new CartAddRequest());
         model.addAttribute("title", "Shop");
         model.addAttribute("stock", response.getItems());
         return "greeting";

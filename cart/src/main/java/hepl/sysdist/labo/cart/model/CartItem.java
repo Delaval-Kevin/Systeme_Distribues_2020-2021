@@ -11,14 +11,11 @@ import javax.persistence.Id;
 @JsonIgnoreProperties({"id", "clientId"})
 public class CartItem {
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private int clientId;
-
 
     private int itemId;
     private int quantity;

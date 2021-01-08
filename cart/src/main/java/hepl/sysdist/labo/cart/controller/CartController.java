@@ -24,10 +24,16 @@ public class CartController {
         CartItem tmpItem = cartDao.getCartItemByClientIdAndItemId(client_id, item.getItemId());
         if(tmpItem != null){
             tmpItem.setQuantity(tmpItem.getQuantity() + item.getQuantity());
-            cartDao.save(tmpItem);
+            if(tmpItem.getQuantity() <= 0)
+                cartDao.delete(tmpItem);
+            else
+                cartDao.save(tmpItem);
         }else{
-            item.setClientId(client_id);
-            cartDao.save(item);
+            if(item.getQuantity() > 0)
+            {
+                item.setClientId(client_id);
+                cartDao.save(item);
+            }
         }
         return this.getCart(client_id);
     }
