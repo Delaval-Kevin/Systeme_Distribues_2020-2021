@@ -1,6 +1,7 @@
 package hepl.sysdist.labo.checkout.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Client
@@ -14,6 +15,9 @@ public class Client
     private String name;
     private String address;
     private double balance;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Paiement> paiements;
 
     /********************************/
     /*         Constructeurs        */
@@ -53,5 +57,13 @@ public class Client
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public List<Paiement> getPaiements() {
+        return paiements;
+    }
+
+    public void setPaiements(List<Paiement> paiements) {
+        this.paiements = paiements;
     }
 }

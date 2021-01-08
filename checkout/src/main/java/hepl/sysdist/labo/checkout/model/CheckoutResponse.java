@@ -7,8 +7,8 @@ public class CheckoutResponse
     /********************************/
     /*           Variables          */
     /********************************/
-    private int id;
-    private Cart cart;
+    private Client client;
+    private float totalCheckout;
 
     /********************************/
     /*         Constructeurs        */
@@ -18,19 +18,19 @@ public class CheckoutResponse
     /********************************/
     /*       Getters & Setters      */
     /********************************/
-    public int getId() {
-        return id;
+    public Client getClient() {
+        return client;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public Cart getCart() {
-        return cart;
+    public float getTotalCheckout() {
+        return totalCheckout;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setTotalCheckout(float totalCheckout) {
+        this.totalCheckout = totalCheckout;
     }
 }

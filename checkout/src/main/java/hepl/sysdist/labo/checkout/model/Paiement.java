@@ -12,13 +12,16 @@ public class Paiement
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne
-    private Client client;
+    private int idCommande;
 
     /********************************/
     /*         Constructeurs        */
     /********************************/
     public Paiement() { }
+
+    public Paiement(int idCommande) {
+        this.idCommande = idCommande;
+    }
 
     /********************************/
     /*       Getters & Setters      */
@@ -31,11 +34,11 @@ public class Paiement
         this.id = id;
     }
 
-    public Client getClient() {
-        return client;
+    public int getIdCommande() {
+        return idCommande;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setIdCommande(int idCommande) {
+        this.idCommande = idCommande;
     }
 }
