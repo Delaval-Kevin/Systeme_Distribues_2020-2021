@@ -10,7 +10,7 @@ public class CartItem {
     private int idArticle;
     private int quantity;
     private TypeTVA typeTVA;
-    private double finalPrice;
+    private float finalPrice;
 
 
     public CartItem() { }
@@ -23,11 +23,11 @@ public class CartItem {
         this.typeTVA = typeTVA;
     }
 
-    public double getFinalPrice() {
+    public float getFinalPrice() {
         return finalPrice;
     }
 
-    public void setFinalPrice(double finalPrice) {
+    public void setFinalPrice(float finalPrice) {
         this.finalPrice = finalPrice;
     }
 

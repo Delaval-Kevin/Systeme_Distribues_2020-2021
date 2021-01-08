@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 @RestController
 public class OrderController {
@@ -14,22 +15,49 @@ public class OrderController {
     @Autowired
     private CommandeDao commandeDao;
 
-    @PostMapping("/order/{cart}{user_id}")
+    @PostMapping("/commande/create")
     public Commande createOrder(@RequestBody Cart cart){
+        //AtomicReference = une référence vers une valeur volatile ( pas celle en cash )
+        AtomicReference<Float> total = new AtomicReference<>((float) 0);
+        Commande com = new Commande();
+        com.setClientId(cart.getClientId());
+        com.setItems(new ArrayList<OrderItem>());
 
-        return null;
+        cart.getCartItems().forEach(cartItem -> {
+          OrderItem orderItem = new OrderItem();
+          orderItem.setIdArticle(cartItem.getIdArticle());
+          orderItem.setQuantity(cartItem.getQuantity());
+          orderItem.setTypeTVA(cartItem.getTypeTVA());
+          orderItem.setPrice(cartItem.getFinalPrice());
+
+          total.set(total.get() + (cartItem.getFinalPrice() * cartItem.getQuantity()));
+
+          com.getItems().add(orderItem);
+        });
+
+        com.setTotal(total.get());
+
+        com.setStatus(OrderStatus.PREPARING);
+
+        return commandeDao.saveAndFlush(com);
     }
-    
 
+    @PostMapping("/commande/changestate")
+    public Commande changeOrderState(@RequestBody Commande commande){
+        Commande com = commandeDao.findCommandeById(commande.getId());
+        com.setStatus(commande.getStatus());
 
-    @GetMapping("/commande/{id}")
-    public Commande getCommande(@PathVariable("id") int id) {
-        return commandeDao.findCommandeById(id);
+        return commandeDao.saveAndFlush(com);
     }
 
-    @GetMapping("/commandes/{user_id}")
-    public ArrayList<Commande> getCommandeByClientId(@PathVariable("user_id") int user_id) {
-        return commandeDao.findCommandesByClientId(user_id);
+    @GetMapping("/commande/{id_commande}")
+    public Commande getCommande(@PathVariable("id_commande") int id_commande) {
+        return commandeDao.findCommandeById(id_commande);
+    }
+
+    @GetMapping("/commandes/{id_client}")
+    public ArrayList<Commande> getCommandeByClientId(@PathVariable("id_client") int id_client) {
+        return commandeDao.findCommandesByClientId(id_client);
     }
 
 }
