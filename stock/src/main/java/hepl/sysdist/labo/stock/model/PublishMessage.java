@@ -1,4 +1,6 @@
 package hepl.sysdist.labo.stock.model;
 
-public class PublishMessage {
+public class PublishMessage
+{
+
 }

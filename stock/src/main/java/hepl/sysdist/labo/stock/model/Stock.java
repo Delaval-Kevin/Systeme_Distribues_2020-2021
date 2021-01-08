@@ -5,11 +5,18 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 
 @Component
-public class Stock {
+public class Stock
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
+    private HashMap<Integer, Item> inventory;
 
-    public HashMap<Integer, Item> inventory;
-
-    public Stock(){
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
+    public Stock()
+    {
         this.inventory = new HashMap<Integer, Item>();
         this.inventory.put(1, new Item(1, "Cereales", 2, 3.99f, "other"));
         this.inventory.put(2, new Item(2, "Console", 17, 4.80f, "other"));
@@ -17,4 +24,14 @@ public class Stock {
         this.inventory.put(4, new Item(4, "Books", 3, 2.95f, "book"));
     }
 
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
+    public HashMap<Integer, Item> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(HashMap<Integer, Item> inventory) {
+        this.inventory = inventory;
+    }
 }

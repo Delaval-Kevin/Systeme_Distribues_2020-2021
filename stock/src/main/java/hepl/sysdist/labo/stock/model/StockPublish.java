@@ -1,16 +1,36 @@
 package hepl.sysdist.labo.stock.model;
 
-public class StockPublish {
+/* Classe de message de la demande du stock */
 
-    /*
-    * Classe de message de la demande du stock
-    * */
+public class StockPublish
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
+    private int idArticle;
+    private int quantity;
 
-    public int idArticle;
-    public int quantity;
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
+    public StockPublish(){ }
 
-    public StockPublish(){
-
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
+    public int getIdArticle() {
+        return idArticle;
     }
 
+    public void setIdArticle(int idArticle) {
+        this.idArticle = idArticle;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }

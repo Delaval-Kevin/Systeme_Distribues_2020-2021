@@ -11,38 +11,27 @@ import java.util.ArrayList;
 
 
 @RestController
-public class StockController {
-
+public class StockController
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Autowired
     private Stock stock;
 
+    /********************************/
+    /*           Methodes           */
+    /********************************/
     @GetMapping("/article/{id}")
-    public StockResult checkInventory(@PathVariable("id") int id, @RequestParam(defaultValue = "1") int think){
-        /*
-        *
-        * Using @RequestParam as
-        *
-        * public @ResponseBody item getitem(@RequestParam("data") String itemid){
-        *
-        * requires data query parameter to be always present.
-        *
-        * Instead if you use it this way
-        *
-        * public @ResponseBody item getitem(@RequestParam Map<String, String> queryParameters){
-        *
-        * , it makes data to be optional – samsri Jan 19 '18 at 9:13
-        *
-        * https://stackoverflow.com/questions/32201441/how-do-i-retrieve-query-parameters-in-spring-boot
-        *
-        * */
+    public StockResult checkInventory(@PathVariable("id") int id, @RequestParam(defaultValue = "1") int think) {
 
         StockResult sr = new StockResult();
 
-        if(stock.inventory.containsKey(id))
+        if(stock.getInventory().containsKey(id))
         {
-            Item item = stock.inventory.get(id);
+            Item item = stock.getInventory().get(id);
             sr.setItem(item);
-            sr.setSufficient(item.quantity >= think);
+            sr.setSufficient(item.getQuantity() >= think);
 
         }else{
             sr.setItem(null);
@@ -56,7 +45,7 @@ public class StockController {
     @GetMapping("/articles")
     public StockListResult getInventory()
     {
-        ArrayList<Item> res = new ArrayList<>(stock.inventory.values());
+        ArrayList<Item> res = new ArrayList<>(stock.getInventory().values());
         return new StockListResult(res);
     }
 
@@ -65,10 +54,10 @@ public class StockController {
     {
         StockResult sr = new StockResult();
 
-        if(stock.inventory.containsKey(id))
+        if(stock.getInventory().containsKey(id))
         {
-            Item item = stock.inventory.get(id);
-            item.quantity -= remove;
+            Item item = stock.getInventory().get(id);
+            item.setQuantity(item.getQuantity()-remove);
         }
     }
 }

@@ -10,7 +10,8 @@ import org.springframework.jms.core.JmsTemplate;
 import javax.jms.Queue;
 
 @Configuration
-public class Config {
+public class Config
+{
 
     @Value("${spring.activemq.broker-url}")
     public String brokerUrl;
