@@ -2,11 +2,22 @@ package hepl.sysdist.labo.order.model;
 
 import java.util.ArrayList;
 
-public class Cart {
-
+public class Cart
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     private int clientId;
     private ArrayList<CartItem> cartItems;
 
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
+    public Cart() { }
+
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
     public int getClientId() {
         return clientId;
     }

@@ -1,18 +1,27 @@
 package hepl.sysdist.labo.tva.model;
 
-public class TVAResponse {
-
+public class TVAResponse
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     private String name;
     private double tax;
 
-    public TVAResponse() {
-    }
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
+    public TVAResponse() { }
 
-    public TVAResponse(String name, double tax) {
+    public TVAResponse(String name, double tax)
+    {
         this.tax = tax;
         this.name = name;
     }
 
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
     public double getTax() {
         return tax;
     }

@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
 @Repository
-public interface CommandeDao extends JpaRepository<Commande, Integer> {
+public interface CommandeDao extends JpaRepository<Commande, Integer>
+{
 
     Commande findCommandeById(int id);
 

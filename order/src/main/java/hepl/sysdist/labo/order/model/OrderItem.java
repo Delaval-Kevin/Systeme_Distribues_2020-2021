@@ -5,8 +5,11 @@ import javax.persistence.*;
 
 
 @Entity
-public class OrderItem {
-
+public class OrderItem
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -15,8 +18,14 @@ public class OrderItem {
     private TypeTVA typeTVA;
     private float price;
 
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
     public OrderItem() { }
 
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
     public int getId() {
         return id;
     }

@@ -5,8 +5,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Commande {
-
+public class Commande
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,8 +20,14 @@ public class Commande {
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderItem> items;
 
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
     public Commande() { }
 
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
     public int getId() {
         return id;
     }

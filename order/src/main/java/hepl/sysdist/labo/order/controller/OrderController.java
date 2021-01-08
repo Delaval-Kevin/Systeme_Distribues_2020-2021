@@ -10,13 +10,19 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 @RestController
-public class OrderController {
-
+public class OrderController
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Autowired
     private CommandeDao commandeDao;
 
+    /********************************/
+    /*           Methodes           */
+    /********************************/
     @PostMapping("/commande/create")
-    public Commande createOrder(@RequestBody Cart cart){
+    public Commande createCommande(@RequestBody Cart cart){
         //AtomicReference = une référence vers une valeur volatile ( pas celle en cash )
         AtomicReference<Float> total = new AtomicReference<>((float) 0);
         Commande com = new Commande();
@@ -43,7 +49,7 @@ public class OrderController {
     }
 
     @PostMapping("/commande/changestate")
-    public Commande changeOrderState(@RequestBody Commande commande){
+    public Commande changeCommandeState(@RequestBody Commande commande){
         Commande com = commandeDao.findCommandeById(commande.getId());
         com.setStatus(commande.getStatus());
 

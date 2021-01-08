@@ -9,11 +9,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CheckoutController {
-
+public class CheckoutController
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Autowired
     private ClientDao clientDao;
 
+    /********************************/
+    /*           Methodes           */
+    /********************************/
     @GetMapping("/{user_id}")
     public CheckoutResponse doCheckout(@RequestBody Cart cart, @PathVariable("user_id") int user_id){
         return new CheckoutResponse();
