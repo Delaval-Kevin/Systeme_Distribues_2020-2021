@@ -43,7 +43,7 @@ public class OrderController
 
         com.setTotal(total.get());
 
-        com.setStatus(OrderStatus.PREPARING);
+        com.setStatus(OrderStatus.CONFIRMATION);
 
         return commandeDao.saveAndFlush(com);
     }
