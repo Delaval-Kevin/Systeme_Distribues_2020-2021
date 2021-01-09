@@ -13,20 +13,20 @@ public class Item
     private String name;
     private int quantity;
     private float price;
-    private String categroy;
+    private String category;
 
     /********************************/
     /*         Constructeurs        */
     /********************************/
     public Item() { }
 
-    public Item(Integer id, String name, int quantity, float price, String categroy)
+    public Item(Integer id, String name, int quantity, float price, String category)
     {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
-        this.categroy = categroy;
+        this.category = category;
     }
 
     /********************************/
@@ -64,11 +64,11 @@ public class Item
         this.price = price;
     }
 
-    public String getCategroy() {
-        return categroy;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategroy(String categroy) {
-        this.categroy = categroy;
+    public void setCategory(String categroy) {
+        this.category = categroy;
     }
 }
