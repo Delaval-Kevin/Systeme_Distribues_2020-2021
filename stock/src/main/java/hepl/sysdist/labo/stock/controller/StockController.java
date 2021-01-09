@@ -50,14 +50,14 @@ public class StockController
     }
 
     @PostMapping("/article")
-    public void removeItem(@PathVariable("id") int id, @RequestParam(defaultValue = "1") int remove)
+    public void removeItem(@RequestBody Item removeItem)
     {
         StockResult sr = new StockResult();
 
-        if(stock.getInventory().containsKey(id))
+        if(stock.getInventory().containsKey(removeItem.getId()))
         {
-            Item item = stock.getInventory().get(id);
-            item.setQuantity(item.getQuantity()-remove);
+            Item item = stock.getInventory().get(removeItem.getId());
+            item.setQuantity(item.getQuantity()- removeItem.getQuantity());
         }
     }
 }

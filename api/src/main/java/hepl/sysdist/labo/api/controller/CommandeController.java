@@ -46,7 +46,7 @@ public class CommandeController {
             item.setName(stockres.getItem().getName());
             item.setSufficient(stockres.isSufficient());
             item.setPrice(stockres.getItem().getPrice());
-            item.setCategory(stockres.getItem().getCategroy());
+            item.setCategory(stockres.getItem().getCategory());
 
             TVAResponse tvaResponse = restTemplate.getForObject("http://tva/tva?category="+item.getCategory(), TVAResponse.class);
             item.setTva((float)tvaResponse.getTax());
@@ -94,7 +94,7 @@ public class CommandeController {
         commande.setStatus(OrderStatus.PREPARING);
         commande.setId(commandId);
 
-        HttpHeaders headers = new HttpHeaders();
+        headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON);
 

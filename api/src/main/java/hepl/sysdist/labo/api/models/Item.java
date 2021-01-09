@@ -10,14 +10,14 @@ public class Item {
     public String name;
     public int quantity;
     public float price;
-    public String categroy;
+    public String category;
 
-    public Item(Integer id, String name, int quantity, float price, String categroy) {
+    public Item(Integer id, String name, int quantity, float price, String category) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
-        this.categroy = categroy;
+        this.category = category;
     }
 
     public Item() {
@@ -55,11 +55,11 @@ public class Item {
         this.price = price;
     }
 
-    public String getCategroy() {
-        return categroy;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategroy(String categroy) {
-        this.categroy = categroy;
+    public void setCategory(String categroy) {
+        this.category = categroy;
     }
 }

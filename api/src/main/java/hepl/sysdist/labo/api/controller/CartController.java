@@ -38,7 +38,7 @@ public class CartController {
             item.setName(stockres.getItem().getName());
             item.setSufficient(stockres.isSufficient());
             item.setPrice(stockres.getItem().getPrice());
-            item.setCategory(stockres.getItem().getCategroy());
+            item.setCategory(stockres.getItem().getCategory());
         }
 
         model.addAttribute("cart", cart);
