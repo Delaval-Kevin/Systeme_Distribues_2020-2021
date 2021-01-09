@@ -7,9 +7,7 @@ public class OrderResponse
     /********************************/
     /*           Variables          */
     /********************************/
-    private ArrayList<CartItem> cartItems;
-    private boolean status;
-    private int id;
+    private ArrayList<Commande> commandes;
 
     /********************************/
     /*         Constructeurs        */
@@ -19,27 +17,11 @@ public class OrderResponse
     /********************************/
     /*       Getters & Setters      */
     /********************************/
-    public ArrayList<CartItem> getCartItems() {
-        return cartItems;
+    public ArrayList<Commande> getCommandes() {
+        return commandes;
     }
 
-    public void setCartItems(ArrayList<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setCommandes(ArrayList<Commande> commandes) {
+        this.commandes = commandes;
     }
 }

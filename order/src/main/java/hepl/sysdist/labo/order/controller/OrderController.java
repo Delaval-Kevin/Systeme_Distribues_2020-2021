@@ -62,8 +62,10 @@ public class OrderController
     }
 
     @GetMapping("/commandes/{id_client}")
-    public ArrayList<Commande> getCommandeByClientId(@PathVariable("id_client") int id_client) {
-        return commandeDao.findCommandesByClientId(id_client); //todo: pas renvoyer une liste
+    public OrderResponse getCommandeByClientId(@PathVariable("id_client") int id_client) {
+        OrderResponse ret = new OrderResponse();
+        ret.setCommandes(commandeDao.findCommandesByClientId(id_client));
+        return ret;
     }
 
 }
