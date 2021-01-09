@@ -49,7 +49,7 @@ public class StockController
         return new StockListResult(res);
     }
 
-    @PostMapping("article/{id}")
+    @PostMapping("/article")
     public void removeItem(@PathVariable("id") int id, @RequestParam(defaultValue = "1") int remove)
     {
         StockResult sr = new StockResult();

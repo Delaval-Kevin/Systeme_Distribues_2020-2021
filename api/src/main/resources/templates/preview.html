@@ -34,10 +34,16 @@
         </div>
         <div class="card-footer text-muted">
             <div class="d-inline">
-                <form class="form-inline">
+                <form class="form-inline" th:action="@{/command/validate}" method="post">
+                    <input type="hidden" value="1" name="user-id">
+                    <input type="hidden" th:value="${commande.getId()}" name="command-id">
+                    <select class="custom-select" id="delivery" name="delivery">
+                        <option value="1" selected>Express <p class="small">(+10€)</p> </option>
+                        <option value="2">Normal <p class="small">(+5€)</p></option>
+                    </select>
 
+                    <button type="submit" class="btn btn-success mx-3">Validate</button>
                 </form>
-                <a href="#" class="btn btn-primary">Commander</a>
                 <a href="#" class="btn btn-danger">Annuler</a>
             </div>
         </div>
