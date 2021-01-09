@@ -31,7 +31,7 @@ public class CartController
         if(tmpItem != null){
             tmpItem.setQuantity(tmpItem.getQuantity() + item.getQuantity());
             if(tmpItem.getQuantity() <= 0)
-                cartDao.delete(tmpItem);
+                cartDao.deleteById(tmpItem.getId());
             else
                 cartDao.save(tmpItem);
         }else{
@@ -41,6 +41,7 @@ public class CartController
                 cartDao.save(item);
             }
         }
+
         return this.getCart(client_id);
     }
 

@@ -1,47 +1,32 @@
-package hepl.sysdist.labo.order.model;
+package hepl.sysdist.labo.api.models.Order;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-public class CartItem
+public class OrderItem
 {
     /********************************/
     /*           Variables          */
     /********************************/
-    @JsonProperty("itemId")
+
+    private int id;
     private int idArticle;
     private int quantity;
-    private String category;
+    private TypeTVA typeTVA;
     private float price;
-    private float finalPrice;
+    private String name = "article tmp";
 
     /********************************/
     /*         Constructeurs        */
     /********************************/
-    public CartItem() { }
+    public OrderItem() { }
 
     /********************************/
     /*       Getters & Setters      */
     /********************************/
-
-    public String getCategory() {
-        return category;
+    public int getId() {
+        return id;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public float getFinalPrice() {
-        return finalPrice;
-    }
-
-    public void setFinalPrice(float finalPrice) {
-        this.finalPrice = finalPrice;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getIdArticle() {
@@ -60,11 +45,27 @@ public class CartItem
         this.quantity = quantity;
     }
 
+    public TypeTVA getTypeTVA() {
+        return typeTVA;
+    }
+
+    public void setTypeTVA(TypeTVA typeTVA) {
+        this.typeTVA = typeTVA;
+    }
+
     public float getPrice() {
         return price;
     }
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

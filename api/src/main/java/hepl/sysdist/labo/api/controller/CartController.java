@@ -31,7 +31,7 @@ public class CartController {
     {
         model.addAttribute("title", "Cart");
 
-        Cart cart = restTemplate.getForObject("http://cart/item/1", Cart.class);
+        Cart cart = restTemplate.getForObject("http://cart/item/1", Cart.class); //todo: get user id
         for (CartItem item: cart.getCartItems()) {
             StockResult stockres = restTemplate.getForObject("http://stock/article/"+ item.getItemId()+"?think="+item.getQuantity(), StockResult.class);
 
@@ -64,6 +64,7 @@ public class CartController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return "cart";
     }
 
@@ -84,6 +85,12 @@ public class CartController {
         HttpEntity<CartAddRequest> httpEntity = new HttpEntity<>(cartAddRequest, headers);
 
         Cart cart = restTemplate.postForObject("http://cart/item/1", httpEntity, Cart.class);
+
+        try {
+            httpResponse.sendRedirect("/cart");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return cart(model);
     }

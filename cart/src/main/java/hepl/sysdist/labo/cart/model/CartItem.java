@@ -30,11 +30,11 @@ public class CartItem
     /*       Getters & Setters      */
     /********************************/
     public int getId() {
-        return itemId;
+        return id;
     }
 
     public void setId(int id) {
-        this.itemId = id;
+        this.id = id;
     }
 
     public int getQuantity() {

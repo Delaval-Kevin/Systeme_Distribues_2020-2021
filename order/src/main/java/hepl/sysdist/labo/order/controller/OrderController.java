@@ -33,7 +33,7 @@ public class OrderController
           OrderItem orderItem = new OrderItem();
           orderItem.setIdArticle(cartItem.getIdArticle());
           orderItem.setQuantity(cartItem.getQuantity());
-          orderItem.setTypeTVA(cartItem.getTypeTVA());
+          orderItem.setTypeTVA(TypeTVA.valueOf(cartItem.getCategory().toUpperCase()));
           orderItem.setPrice(cartItem.getFinalPrice());
 
           total.set(total.get() + (cartItem.getFinalPrice() * cartItem.getQuantity()));
@@ -63,7 +63,7 @@ public class OrderController
 
     @GetMapping("/commandes/{id_client}")
     public ArrayList<Commande> getCommandeByClientId(@PathVariable("id_client") int id_client) {
-        return commandeDao.findCommandesByClientId(id_client);
+        return commandeDao.findCommandesByClientId(id_client); //todo: pas renvoyer une liste
     }
 
 }

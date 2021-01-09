@@ -26,12 +26,16 @@
                 <form action="#" th:action="@{/cart/item}" method="post">
                     <input type="hidden" th:value="${item.getItemId()}" name="item-id">
                     <input type="hidden" value="1" name="quantity">
-                    <button type="submit" class="button btn-danger">Supprimer 1x</button>
+                    <button type="submit" class="btn btn-danger">Supprimer 1x</button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
+    <form action="#" th:action="@{/command/preview}" method="post">
+        <input type="hidden" value="1" name="user-id">
+        <button type="submit" class="btn btn-outline-primary" th:disabled="${!cart.isSufficient()}">Passer à la commande</button>
+    </form>
 </div>
 </body>
 </html>
