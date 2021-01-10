@@ -112,6 +112,7 @@ public class CommandeController {
 
 
         //todo: vider le cart
+        restTemplate.delete("http://cart/item/1");
 
         model.addAttribute("title", "Commande");
 

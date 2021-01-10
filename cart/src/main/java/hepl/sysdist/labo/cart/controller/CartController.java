@@ -6,6 +6,8 @@ import hepl.sysdist.labo.cart.model.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 public class CartController
 {
@@ -46,12 +48,12 @@ public class CartController
     }
 
     @DeleteMapping("/item/{client_id}")
-    public Cart deleteFromCart(@PathVariable int client_id, @RequestBody CartItem item){
-        CartItem tmpItem = cartDao.getCartItemByClientIdAndItemId(client_id, item.getItemId());
-        if(tmpItem != null){
-            cartDao.delete(tmpItem);
+    public void deleteFromCart(@PathVariable int client_id){
+        ArrayList<CartItem> items = cartDao.getCartItemsByClientId(client_id);
+        for(CartItem item: items)
+        {
+            cartDao.delete(item);
         }
-        return this.getCart(client_id);
     }
 
 }

@@ -13,4 +13,6 @@ public interface CartDao extends JpaRepository<CartItem, Integer>
 
     CartItem getCartItemByClientIdAndItemId(int clientId, int itemId);
 
+    void deleteCartItemsByClientId(int clientId);
+
 }
