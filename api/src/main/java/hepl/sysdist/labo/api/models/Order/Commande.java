@@ -11,6 +11,7 @@ public class Commande
     private int clientId;
     private OrderStatus status;
     private float total;
+    private boolean express;
 
     private List<OrderItem> items;
 
@@ -60,5 +61,13 @@ public class Commande
 
     public void setItems(List<OrderItem> items) {
         this.items = items;
+    }
+
+    public boolean isExpress() {
+        return express;
+    }
+
+    public void setExpress(boolean express) {
+        this.express = express;
     }
 }

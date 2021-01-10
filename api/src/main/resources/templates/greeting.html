@@ -10,19 +10,19 @@
     <div class="row">
         <div th:each="item: ${stock}" class="col-3">
             <div class="card">
-                <img th:src="@{'/images/'+${item.id}+'.jpeg'}" class="card-img-top" alt="..." width="232" height="150" style="object-fit: cover">
+                <img th:src="@{'/images/'+${item.getId()}+'.jpeg'}" class="card-img-top" alt="..." width="232" height="150" style="object-fit: cover">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${item.name}"></h5>
-                    <p th:text="${item.quantity}"></p>
+                    <h5 class="card-title" th:text="${item.getName()}"></h5>
+                    <p th:text="${item.getQuantity()}"></p>
 
                     <form th:action="@{/cart}" th:object="${cartAddRequest}" method="post">
-                        <input type="hidden" th:value="${item.id}" name="id">
+                        <input type="hidden" th:value="${item.getId()}" name="id">
                         <div class="form-row align-items-center">
                             <div class="col-9">
                                 <input type="number" th:field="*{quantity}" placeholder="Quantity" class="form-control" min="1" th:max="${item.quantity}">
                             </div>
                             <div class="col-3">
-                                <button type="submit" class="btn btn-primary" th:disabled="${item.quantity < 1}">Add</button>
+                                <button type="submit" class="btn btn-primary" th:disabled="${item.getQuantity() < 1}">Add</button>
                             </div>
                         </div>
                     </form>

@@ -4,15 +4,27 @@
 
 package hepl.sysdist.labo.api.models;
 
-public class Item {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public Integer id;
-    public String name;
-    public int quantity;
-    public float price;
-    public String category;
+public class Item
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
+    @JsonProperty("idArticle")
+    private Integer id;
+    private String name;
+    private int quantity;
+    private float price;
+    private String category;
 
-    public Item(Integer id, String name, int quantity, float price, String category) {
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
+    public Item() { }
+
+    public Item(Integer id, String name, int quantity, float price, String category)
+    {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -20,9 +32,9 @@ public class Item {
         this.category = category;
     }
 
-    public Item() {
-    }
-
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
     public Integer getId() {
         return id;
     }
@@ -59,7 +71,7 @@ public class Item {
         return category;
     }
 
-    public void setCategory(String categroy) {
-        this.category = categroy;
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

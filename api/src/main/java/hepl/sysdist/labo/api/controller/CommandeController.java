@@ -7,6 +7,7 @@ package hepl.sysdist.labo.api.controller;
 import hepl.sysdist.labo.api.models.Cart.Cart;
 import hepl.sysdist.labo.api.models.Cart.CartAddRequest;
 import hepl.sysdist.labo.api.models.Cart.CartItem;
+import hepl.sysdist.labo.api.models.Checkout.CheckoutResponse;
 import hepl.sysdist.labo.api.models.Order.Commande;
 import hepl.sysdist.labo.api.models.Order.OrderItem;
 import hepl.sysdist.labo.api.models.Order.OrderStatus;
@@ -78,17 +79,14 @@ public class CommandeController {
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-
-
         Commande commande = restTemplate.getForObject("http://order/commande/"+commandId,Commande.class);
 
         /* vider le stock */
         for(OrderItem item: commande.getItems())
         {
             HttpEntity<OrderItem> httpEntity = new HttpEntity<>(item, headers);
-            restTemplate.postForObject("http://stock/article/"+item.getId()+"?remove="+item.getQuantity(), httpEntity, Object.class);
+            restTemplate.postForObject("http://stock/article/", httpEntity, Object.class);
         }
-
 
         /*changement de l'etat de la commande*/
         commande.setStatus(OrderStatus.PREPARING);
@@ -103,21 +101,21 @@ public class CommandeController {
         commande = restTemplate.postForObject("http://order/commande/changestate", httpEntity, Commande.class);
         /*FIN changement de l'etat de la commande*/
 
-        //todo: envoyer sur checkout
+        /* Envoi sur le checkout */
+        commande.setExpress(fastDelivery);
+        model.addAttribute("commande", commande);
+        httpEntity = new HttpEntity<>(commande, headers);
 
-        //todo: recup les infos du client
+        CheckoutResponse checkoutResponse = restTemplate.postForObject("http://checkout/checkout", httpEntity, CheckoutResponse.class);
+        model.addAttribute("client", checkoutResponse.getClient());
+        model.addAttribute("total", checkoutResponse.getTotalCheckout());
 
+
+        //todo: vider le cart
+
+        model.addAttribute("title", "Commande");
 
         return "recap";
-    }
-
-    @GetMapping("/command/list")
-    public String listUserCommands()
-    {
-
-        //todo: get liste + retour
-
-        return "";
     }
 
 }

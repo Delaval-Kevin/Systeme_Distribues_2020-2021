@@ -84,7 +84,7 @@ public class CartController {
 
         HttpEntity<CartAddRequest> httpEntity = new HttpEntity<>(cartAddRequest, headers);
 
-        Cart cart = restTemplate.postForObject("http://cart/item/1", httpEntity, Cart.class);
+        Cart cart = restTemplate.postForObject("http://cart/item/1", httpEntity, Cart.class); //todo: get id personne
 
         try {
             httpResponse.sendRedirect("/cart");

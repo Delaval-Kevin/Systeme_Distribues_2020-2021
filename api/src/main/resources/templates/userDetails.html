@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="head :: head">
+
+</head>
+<body>
+<div th:replace="navbar :: navbar">...</div>
+
+<div class="container-fluid my-3">
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            <p th:text="${client.getName()}"></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" th:text="'Adresse: ' + ${client.getAddress()}"></li>
+            <li class="list-group-item" th:text="'Balance: ' + ${client.getBalance()} + ' €'"></li>
+
+        </ul>
+    </div>
+</div>
+
+<div class="alert alert-warning" role="alert">
+    Historique des commandes
+</div>
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div th:each="commande: ${commandes}" class="col-3">
+            <div class="card border-primary text-center">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <p class="d-inline">Status: </p>
+                        <p class="d-inline" th:text="${commande.getStatus()}"></p>
+                    </h5>
+                    <div class="card-text">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Article</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Unit Price</th>
+                                <th scope="col">Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item: ${commande.getItems()}">
+                                <td th:text="${item.getName()}"></td>
+                                <td th:text="${item.getQuantity()}"></td>
+                                <td th:text="${item.getPrice()}"></td>
+                                <td th:text="${item.getPrice() * item.getQuantity()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <p th:text="${commande.getTotal()}+'€ total'"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

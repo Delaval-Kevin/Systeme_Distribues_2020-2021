@@ -18,6 +18,7 @@
                         <tr>
                             <th scope="col">Article</th>
                             <th scope="col">Quantity</th>
+                            <th scope="col">Unit Price</th>
                             <th scope="col">Price</th>
                         </tr>
                     </thead>
@@ -26,6 +27,7 @@
                             <td th:text="${item.getName()}"></td>
                             <td th:text="${item.getQuantity()}"></td>
                             <td th:text="${item.getPrice()}"></td>
+                            <td th:text="${item.getPrice() * item.getQuantity()}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -39,7 +41,7 @@
                     <input type="hidden" th:value="${commande.getId()}" name="command-id">
                     <select class="custom-select" id="delivery" name="delivery">
                         <option value="1" selected>Express <p class="small">(+10€)</p> </option>
-                        <option value="2">Normal <p class="small">(+5€)</p></option>
+                        <option value="0">Normal <p class="small">(+5€)</p></option>
                     </select>
 
                     <button type="submit" class="btn btn-success mx-3">Validate</button>

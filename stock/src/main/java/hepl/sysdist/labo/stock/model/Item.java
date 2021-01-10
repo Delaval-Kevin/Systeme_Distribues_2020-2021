@@ -4,6 +4,8 @@
 
 package hepl.sysdist.labo.stock.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Item
 {
     /********************************/
@@ -36,6 +38,7 @@ public class Item
         return id;
     }
 
+    @JsonProperty("idArticle")
     public void setId(Integer id) {
         this.id = id;
     }
@@ -68,7 +71,7 @@ public class Item
         return category;
     }
 
-    public void setCategory(String categroy) {
-        this.category = categroy;
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
