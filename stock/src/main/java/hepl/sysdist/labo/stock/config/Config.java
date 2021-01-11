@@ -2,6 +2,7 @@ package hepl.sysdist.labo.stock.config;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,11 @@ public class Config
     @Bean
     public Queue queue(){
         return new ActiveMQQueue("stock.queue");
+    }
+
+    @Bean
+    public ActiveMQTopic topic(){
+        return  new ActiveMQTopic("stock.topic");
     }
 
     @Bean
