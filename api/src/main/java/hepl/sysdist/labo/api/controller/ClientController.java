@@ -8,6 +8,8 @@ import hepl.sysdist.labo.api.config.Session;
 import hepl.sysdist.labo.api.models.Checkout.Client;
 import hepl.sysdist.labo.api.models.Checkout.Paiement;
 import hepl.sysdist.labo.api.models.Order.Commande;
+import hepl.sysdist.labo.api.models.Order.OrderItem;
+import hepl.sysdist.labo.api.models.StockResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,8 +42,14 @@ public class ClientController {
         for (Paiement paiement : client.getPaiements())
         {
             Commande commande = restTemplate.getForObject("http://order/commande/"+paiement.getIdCommande(),Commande.class);
-            commandes.add(commande);
-            //todo: recup les infos des objets dans la commande
+            if(commande != null)
+            {
+                commandes.add(commande);
+                for (OrderItem item: commande.getItems()) {
+                    StockResult stockres = restTemplate.getForObject("http://stock/article/" + item.getIdArticle() + "?think=" + item.getQuantity(), StockResult.class);
+                    item.setName(stockres.getItem().getName());
+                }
+            }
         }
 
         model.addAttribute("commandes", commandes);

@@ -17,6 +17,7 @@ import hepl.sysdist.labo.api.models.StockResult;
 import hepl.sysdist.labo.api.models.Tva.TVAResponse;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -70,8 +71,10 @@ public class CommandeController {
         HttpEntity<Cart> httpEntity = new HttpEntity<>(cart, headers);
 
         Commande commande = restTemplate.postForObject("http://order/commande/create", httpEntity, Commande.class);
-
-        //todo: ajouter les infos des articles dans les objets de la commande
+        for (OrderItem item: commande.getItems()) {
+            StockResult stockres = restTemplate.getForObject("http://stock/article/" + item.getIdArticle() + "?think=" + item.getQuantity(), StockResult.class);
+            item.setName(stockres.getItem().getName());
+        }
 
         model.addAttribute("commande", commande);
 
@@ -92,6 +95,10 @@ public class CommandeController {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         Commande commande = restTemplate.getForObject("http://order/commande/"+commandId,Commande.class);
+        for (OrderItem item: commande.getItems()) {
+            StockResult stockres = restTemplate.getForObject("http://stock/article/" + item.getIdArticle() + "?think=" + item.getQuantity(), StockResult.class);
+            item.setName(stockres.getItem().getName());
+        }
 
         /* vider le stock */
         for(OrderItem item: commande.getItems())
@@ -147,7 +154,7 @@ public class CommandeController {
         HttpEntity<Commande> httpEntity = new HttpEntity<>(commande, headers);
 
         restTemplate.postForObject("http://order/commande/cancel", httpEntity, Object.class);
-        
+
         return "redirect:/";
     }
 
