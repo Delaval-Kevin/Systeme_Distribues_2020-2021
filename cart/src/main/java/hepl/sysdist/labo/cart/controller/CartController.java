@@ -56,4 +56,15 @@ public class CartController
         }
     }
 
+    @GetMapping("/swap/{old}/{new}") //pas le plus opti mais le plus simple
+    public void swapUsers(@PathVariable int old, @PathVariable("new") int newUser)
+    {
+        ArrayList<CartItem> items = cartDao.getCartItemsByClientId(old);
+        for(CartItem item: items)
+        {
+            addToCart(newUser, item);
+        }
+        deleteFromCart(old);
+    }
+
 }

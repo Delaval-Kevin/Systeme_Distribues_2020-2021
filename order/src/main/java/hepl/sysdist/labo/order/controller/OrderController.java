@@ -68,4 +68,9 @@ public class OrderController
         return ret;
     }
 
+    @PostMapping("/commande/cancel")
+    public void cancelCommandeState(@RequestBody Commande commande){
+        commandeDao.delete(commande);
+    }
+
 }

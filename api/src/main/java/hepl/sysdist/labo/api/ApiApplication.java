@@ -7,6 +7,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+
 @SpringBootApplication
 @EnableEurekaClient
 public class ApiApplication {
@@ -15,6 +17,16 @@ public class ApiApplication {
 	@LoadBalanced
 	public RestTemplate getRestTemplate(){
 		return new RestTemplate();
+	}
+
+	@Bean
+	public HashMap<String, Integer> getUsersId()
+	{
+		HashMap<String, Integer> hashmap = new HashMap<>();
+		hashmap.put("loic", 1);
+		hashmap.put("samuel", 2);
+		hashmap.put("kevin", 3);
+		return hashmap;
 	}
 
 	public static void main(String[] args) {

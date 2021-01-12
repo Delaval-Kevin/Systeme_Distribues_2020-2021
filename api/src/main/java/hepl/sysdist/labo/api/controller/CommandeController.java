@@ -4,6 +4,8 @@
 
 package hepl.sysdist.labo.api.controller;
 
+import com.netflix.discovery.converters.Auto;
+import hepl.sysdist.labo.api.config.Session;
 import hepl.sysdist.labo.api.models.Cart.Cart;
 import hepl.sysdist.labo.api.models.Cart.CartAddRequest;
 import hepl.sysdist.labo.api.models.Cart.CartItem;
@@ -25,7 +27,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
 public class CommandeController {
@@ -33,14 +37,19 @@ public class CommandeController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private Session session;
+
     @PostMapping("/command/preview")
     public String previewCommande(@RequestParam("user-id") int id,
                                   Model model,
-                                  HttpServletResponse httpResponse)
+                                  HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
     {
+        session.CheckUserConnection(httpServletRequest, httpServletResponse);
+        int userId = session.getUserId(httpServletRequest);
         model.addAttribute("title", "Preview");
 
-        Cart cart = restTemplate.getForObject("http://cart/item/1", Cart.class); //todo: get user id
+        Cart cart = restTemplate.getForObject("http://cart/item/"+userId, Cart.class);
         for (CartItem item: cart.getCartItems()) {
             StockResult stockres = restTemplate.getForObject("http://stock/article/"+ item.getItemId()+"?think="+item.getQuantity(), StockResult.class);
 
@@ -52,7 +61,7 @@ public class CommandeController {
             TVAResponse tvaResponse = restTemplate.getForObject("http://tva/tva?category="+item.getCategory(), TVAResponse.class);
             item.setTva((float)tvaResponse.getTax());
         }
-        cart.setClientId(1);
+        cart.setClientId(userId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
@@ -73,8 +82,11 @@ public class CommandeController {
     public String validateCommande(@RequestParam("user-id") int id, @RequestParam("delivery") boolean fastDelivery,
                                    @RequestParam("command-id") int commandId,
                                    Model model,
-                                   HttpServletResponse httpResponse)
+                                   HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
     {
+        session.CheckUserConnection(httpServletRequest, httpServletResponse);
+        int userId = session.getUserId(httpServletRequest);
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -110,13 +122,33 @@ public class CommandeController {
         model.addAttribute("client", checkoutResponse.getClient());
         model.addAttribute("total", checkoutResponse.getTotalCheckout());
 
-
-        //todo: vider le cart
-        restTemplate.delete("http://cart/item/1");
+        restTemplate.delete("http://cart/item/"+userId);
 
         model.addAttribute("title", "Commande");
 
         return "recap";
+    }
+
+    @PostMapping("/command/cancel")
+    public String cancelCommande(  @RequestParam("command-id") int commandId,
+                                   Model model,
+                                   HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+    {
+        session.CheckUserConnection(httpServletRequest, httpServletResponse);
+        int userId = session.getUserId(httpServletRequest);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Commande commande = new Commande();
+        commande.setId(commandId);
+
+        HttpEntity<Commande> httpEntity = new HttpEntity<>(commande, headers);
+
+        restTemplate.postForObject("http://order/commande/cancel", httpEntity, Object.class);
+        
+        return "redirect:/";
     }
 
 }

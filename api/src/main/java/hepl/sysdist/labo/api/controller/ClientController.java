@@ -4,6 +4,7 @@
 
 package hepl.sysdist.labo.api.controller;
 
+import hepl.sysdist.labo.api.config.Session;
 import hepl.sysdist.labo.api.models.Checkout.Client;
 import hepl.sysdist.labo.api.models.Checkout.Paiement;
 import hepl.sysdist.labo.api.models.Order.Commande;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
@@ -22,11 +24,16 @@ public class ClientController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private Session session;
+
     @GetMapping("/user")
     public String listUserCommands(Model model,
-                                   HttpServletResponse httpResponse)
+                                   HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
     {
-        Client client = restTemplate.getForObject("http://checkout/checkout/1", Client.class);
+        int userId = session.CheckUserConnection(httpServletRequest, httpServletResponse);
+
+        Client client = restTemplate.getForObject("http://checkout/checkout/"+userId, Client.class);
         model.addAttribute("client", client);
         ArrayList<Commande> commandes = new ArrayList<>();
 

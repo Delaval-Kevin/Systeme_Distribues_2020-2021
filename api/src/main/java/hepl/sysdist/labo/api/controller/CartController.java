@@ -4,6 +4,7 @@
 
 package hepl.sysdist.labo.api.controller;
 
+import hepl.sysdist.labo.api.config.Session;
 import hepl.sysdist.labo.api.models.Cart.Cart;
 import hepl.sysdist.labo.api.models.Cart.CartAddRequest;
 import hepl.sysdist.labo.api.models.Cart.CartItem;
@@ -12,11 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -26,12 +29,19 @@ public class CartController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private Session session;
+
     @GetMapping("/cart")
-    public String cart(Model model)
+    public String cart(Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
     {
+        session.CheckUserConnection(httpServletRequest, httpServletResponse);
+
         model.addAttribute("title", "Cart");
 
-        Cart cart = restTemplate.getForObject("http://cart/item/1", Cart.class); //todo: get user id
+        int idUser = session.getUserId(httpServletRequest);
+
+        Cart cart = restTemplate.getForObject("http://cart/item/"+idUser, Cart.class);
         for (CartItem item: cart.getCartItems()) {
             StockResult stockres = restTemplate.getForObject("http://stock/article/"+ item.getItemId()+"?think="+item.getQuantity(), StockResult.class);
 
@@ -47,7 +57,8 @@ public class CartController {
     }
 
     @PostMapping("/cart")
-    public String addItemToCart(@ModelAttribute CartAddRequest cartAddRequest, Model model, HttpServletResponse httpResponse)
+    public String addItemToCart(@ModelAttribute CartAddRequest cartAddRequest, Model model,
+                                HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
     {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
@@ -55,12 +66,13 @@ public class CartController {
 
         HttpEntity<CartAddRequest> httpEntity = new HttpEntity<>(cartAddRequest, headers);
 
-        Cart cart = restTemplate.postForObject("http://cart/item/1", httpEntity, Cart.class);
+        int idUser = session.getUserId(httpServletRequest);
+        Cart cart = restTemplate.postForObject("http://cart/item/"+idUser, httpEntity, Cart.class);
 
         model.addAttribute("cart", cart);
 
         try {
-            httpResponse.sendRedirect("/");
+            httpServletResponse.sendRedirect("/");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,9 +83,8 @@ public class CartController {
     @PostMapping("/cart/item")
     public String removeItemFromCart(@RequestParam("item-id") int id, @RequestParam("quantity") int quantity,
                                      Model model,
-                                     HttpServletResponse httpResponse)
+                                     HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
     {
-        System.out.println((id + " ** " + quantity));
         CartAddRequest cartAddRequest = new CartAddRequest();
         cartAddRequest.setId(id);
         cartAddRequest.setQuantity(-quantity);
@@ -84,15 +95,16 @@ public class CartController {
 
         HttpEntity<CartAddRequest> httpEntity = new HttpEntity<>(cartAddRequest, headers);
 
-        Cart cart = restTemplate.postForObject("http://cart/item/1", httpEntity, Cart.class); //todo: get id personne
+        int idUser = session.getUserId(httpServletRequest);
+        Cart cart = restTemplate.postForObject("http://cart/item/"+idUser, httpEntity, Cart.class); //todo: get id personne
 
         try {
-            httpResponse.sendRedirect("/cart");
+            httpServletResponse.sendRedirect("/cart");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return cart(model);
+        return cart(model, httpServletRequest, httpServletResponse);
     }
 
 

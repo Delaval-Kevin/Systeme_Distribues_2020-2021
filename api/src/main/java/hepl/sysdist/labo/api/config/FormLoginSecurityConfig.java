@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import java.util.ArrayList;
+
 @Configuration
 @EnableWebSecurity
 public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -18,20 +20,43 @@ public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/shop").permitAll()
-                .anyRequest().permitAll(); 
+                .antMatchers("/command/*").authenticated()
+                .antMatchers("/user").authenticated()
+                .anyRequest().permitAll()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
     }
 
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User
-                        .withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
-                        .roles("USER")
-                        .build();
-        return new InMemoryUserDetailsManager(user);
+        ArrayList<UserDetails> users = new ArrayList<>();
+        users.add(User
+                .withDefaultPasswordEncoder()
+                .username("loic")
+                .password("password")
+                .roles("USER")
+                .build());
+
+        users.add(User
+                .withDefaultPasswordEncoder()
+                .username("samuel")
+                .password("password")
+                .roles("USER")
+                .build());
+
+        users.add(User
+                .withDefaultPasswordEncoder()
+                .username("kevin")
+                .password("password")
+                .roles("USER")
+                .build());
+
+        return new InMemoryUserDetailsManager(users);
     }
 }

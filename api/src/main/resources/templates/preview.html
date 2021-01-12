@@ -46,7 +46,12 @@
 
                     <button type="submit" class="btn btn-success mx-3">Validate</button>
                 </form>
-                <a href="#" class="btn btn-danger">Annuler</a>
+                <form class="form-inline" th:action="@{/command/cancel}" method="post">
+                    <input type="hidden" value="1" name="user-id">
+                    <input type="hidden" th:value="${commande.getId()}" name="command-id">
+
+                    <button type="submit" class="btn btn-danger mx-3">Validate</button>
+                </form>
             </div>
         </div>
     </div>
@@ -54,3 +59,4 @@
 
 </body>
 </html>
+
