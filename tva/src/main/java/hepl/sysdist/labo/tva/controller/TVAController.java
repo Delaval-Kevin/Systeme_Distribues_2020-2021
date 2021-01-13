@@ -23,6 +23,7 @@ public class TVAController
     @GetMapping("/tva")
     public TVAResponse getTva(@RequestParam(defaultValue = "default") String category)
     {
+        System.out.println("Je suis l'instance utilisée par EUREKA en ce moment");
         if(tvaList.containsKey(category))
         {
             return new TVAResponse(category, tvaList.get(category));
