@@ -33,14 +33,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class CommandeController {
-
+public class CommandeController
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Autowired
     private RestTemplate restTemplate;
 
     @Autowired
     private Session session;
 
+    /********************************/
+    /*           Methodes           */
+    /********************************/
     @PostMapping("/command/preview")
     public String previewCommande(@RequestParam("user-id") int id,
                                   Model model,
@@ -51,7 +57,8 @@ public class CommandeController {
         model.addAttribute("title", "Preview");
 
         Cart cart = restTemplate.getForObject("http://cart/item/"+userId, Cart.class);
-        for (CartItem item: cart.getCartItems()) {
+        for (CartItem item: cart.getCartItems())
+        {
             StockResult stockres = restTemplate.getForObject("http://stock/article/"+ item.getItemId()+"?think="+item.getQuantity(), StockResult.class);
 
             item.setName(stockres.getItem().getName());
@@ -71,7 +78,8 @@ public class CommandeController {
         HttpEntity<Cart> httpEntity = new HttpEntity<>(cart, headers);
 
         Commande commande = restTemplate.postForObject("http://order/commande/create", httpEntity, Commande.class);
-        for (OrderItem item: commande.getItems()) {
+        for (OrderItem item: commande.getItems())
+        {
             StockResult stockres = restTemplate.getForObject("http://stock/article/" + item.getIdArticle() + "?think=" + item.getQuantity(), StockResult.class);
             item.setName(stockres.getItem().getName());
         }
@@ -95,7 +103,8 @@ public class CommandeController {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         Commande commande = restTemplate.getForObject("http://order/commande/"+commandId,Commande.class);
-        for (OrderItem item: commande.getItems()) {
+        for (OrderItem item: commande.getItems())
+        {
             StockResult stockres = restTemplate.getForObject("http://stock/article/" + item.getIdArticle() + "?think=" + item.getQuantity(), StockResult.class);
             item.setName(stockres.getItem().getName());
         }

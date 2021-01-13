@@ -6,16 +6,25 @@ package hepl.sysdist.labo.api.models;
 
 import java.util.ArrayList;
 
-public class StockListResult {
+public class StockListResult
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     private ArrayList<Item> items;
 
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
     public StockListResult(ArrayList<Item> items) {
         this.items = items;
     }
 
-    public StockListResult() {
-    }
+    public StockListResult() { }
 
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
     public ArrayList<Item> getItems() {
         return items;
     }

@@ -11,8 +11,8 @@ import java.util.HashMap;
 
 @SpringBootApplication
 @EnableEurekaClient
-public class ApiApplication {
-
+public class ApiApplication
+{
 	@Bean
 	@LoadBalanced
 	public RestTemplate getRestTemplate(){
@@ -32,5 +32,4 @@ public class ApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
 	}
-
 }

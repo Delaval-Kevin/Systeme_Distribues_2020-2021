@@ -17,29 +17,39 @@ import java.util.HashMap;
 import java.util.Random;
 
 @Component
-public class Session {
-
+public class Session
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Autowired
     private RestTemplate restTemplate;
 
     @Autowired
     private HashMap<String, Integer> usersId;
 
+    /********************************/
+    /*           Methodes           */
+    /********************************/
     public int CheckUserConnection(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
     {
+        //recherche si user principal
         Principal principal = httpServletRequest.getUserPrincipal();
 
         if(principal != null)
         {
             System.out.println(principal.getName());
 
+            //on vérifie si l'id correspond au nom
             if(usersId.containsKey(principal.getName()))
             {
+                //on recupère les cookies du user
                 int id = usersId.get(principal.getName());
                 int cookiesId = getUserId(httpServletRequest);
                 if(id != cookiesId)
                 {
                     httpServletResponse.addCookie(new Cookie("user_id", Integer.toString(id)));
+                    //ici permet de rajouter a notre cart se qu'on a ajouter en tant que visiteur
                     restTemplate.getForObject("http://cart/swap/"+cookiesId+"/"+id, Object.class);
                 }
                 return id;
@@ -52,6 +62,7 @@ public class Session {
             System.out.println("visiteur");
             if(getUserId(httpServletRequest) == -1)
             {
+                //pour générer une valeur pour le visiteur, pour savoir distinguer les visiteurs
                 int min = 4;
                 int max = 100;
                 Random rand = new Random();

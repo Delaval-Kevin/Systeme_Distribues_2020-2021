@@ -14,31 +14,33 @@ import java.util.ArrayList;
 
 @Configuration
 @EnableWebSecurity
-public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
-
+public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter
+{
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception
+    {
         http
                 .authorizeRequests()
-                .antMatchers("/command/*").authenticated()
-                .antMatchers("/user").authenticated()
+                .antMatchers("/command/*").authenticated()  //authentifier pour command
+                .antMatchers("/user").authenticated()       //authentifier pour user
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .permitAll()
+                .loginPage("/login")    //tout le monde peut
+                .permitAll()            //aller sur login
                 .and()
                 .logout()
-                .logoutSuccessUrl("/shop")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/shop")  //si on se logout
+                .invalidateHttpSession(true)//on invalide la session
+                .deleteCookies("JSESSIONID")//et vide les cookies
                 .deleteCookies("user_id")
                 .permitAll();
     }
 
     @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
+    @Override //ici on mets les 3 users en mémoire
+    public UserDetailsService userDetailsService()
+    {
         ArrayList<UserDetails> users = new ArrayList<>();
         users.add(User
                 .withDefaultPasswordEncoder()

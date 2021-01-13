@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 
-public class CartItem {
-
+public class CartItem
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     private int itemId;
     private int quantity;
     private boolean sufficient;
@@ -14,9 +17,14 @@ public class CartItem {
     private String category;
     private float tva;
 
-    public CartItem() {
-    }
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
+    public CartItem() { }
 
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
     public int getQuantity() {
         return quantity;
     }

@@ -23,14 +23,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-public class IndexController {
-
+public class IndexController
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Autowired
     private RestTemplate restTemplate;
 
     @Autowired
     private Session session;
 
+    /********************************/
+    /*           Methodes           */
+    /********************************/
     @GetMapping(value = {"/", "/shop"})
     public String greeting(Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
     {
@@ -38,9 +44,11 @@ public class IndexController {
 
         StockListResult response = restTemplate.getForObject("http://stock/articles", StockListResult.class);
 
+        //model avec des clé - valeurs
         model.addAttribute("cartAddRequest", new CartAddRequest());
         model.addAttribute("title", "Shop");
         model.addAttribute("stock", response.getItems());
+        //retourne le nom de la vue
         return "greeting";
     }
 }

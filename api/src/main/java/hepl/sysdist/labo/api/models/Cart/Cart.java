@@ -2,14 +2,22 @@ package hepl.sysdist.labo.api.models.Cart;
 
 import java.util.ArrayList;
 
-public class Cart {
-
+public class Cart
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     private int clientId;
     private ArrayList<CartItem> cartItems;
 
-    public Cart() {
-    }
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
+    public Cart() { }
 
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
     public int getClientId() {
         return clientId;
     }
@@ -26,6 +34,9 @@ public class Cart {
         this.cartItems = cartItems;
     }
 
+    /********************************/
+    /*           Methodes           */
+    /********************************/
     public boolean isSufficient()
     {
         if(cartItems == null || cartItems.size() == 0)
@@ -36,7 +47,6 @@ public class Cart {
             if(!item.isSufficient())
                 return false;
         }
-
         return true;
     }
 }

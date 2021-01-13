@@ -24,14 +24,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class CartController {
-
+public class CartController
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Autowired
     private RestTemplate restTemplate;
 
     @Autowired
     private Session session;
 
+    /********************************/
+    /*           Methodes           */
+    /********************************/
     @GetMapping("/cart")
     public String cart(Model model, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
     {
@@ -42,7 +48,8 @@ public class CartController {
         int idUser = session.getUserId(httpServletRequest);
 
         Cart cart = restTemplate.getForObject("http://cart/item/"+idUser, Cart.class);
-        for (CartItem item: cart.getCartItems()) {
+        for (CartItem item: cart.getCartItems())
+        {
             StockResult stockres = restTemplate.getForObject("http://stock/article/"+ item.getItemId()+"?think="+item.getQuantity(), StockResult.class);
 
             item.setName(stockres.getItem().getName());
@@ -56,7 +63,7 @@ public class CartController {
         return "cart";
     }
 
-    @PostMapping("/cart")
+    @PostMapping("/cart")   //@ModelAttribute avec Thymeleaf on peutt jouer avec les models
     public String addItemToCart(@ModelAttribute CartAddRequest cartAddRequest, Model model,
                                 HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
     {
@@ -71,9 +78,12 @@ public class CartController {
 
         model.addAttribute("cart", cart);
 
-        try {
+        try
+        {
             httpServletResponse.sendRedirect("/");
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
 
@@ -98,14 +108,14 @@ public class CartController {
         int idUser = session.getUserId(httpServletRequest);
         Cart cart = restTemplate.postForObject("http://cart/item/"+idUser, httpEntity, Cart.class); //todo: get id personne
 
-        try {
+        try
+        {
             httpServletResponse.sendRedirect("/cart");
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
 
         return cart(model, httpServletRequest, httpServletResponse);
     }
-
-
 }

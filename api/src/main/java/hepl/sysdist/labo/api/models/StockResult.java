@@ -1,13 +1,21 @@
 package hepl.sysdist.labo.api.models;
 
-public class StockResult {
-
+public class StockResult
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     private Item item;
     private boolean sufficient;
 
-    public StockResult() {
-    }
+    /********************************/
+    /*         Constructeurs        */
+    /********************************/
+    public StockResult() { }
 
+    /********************************/
+    /*       Getters & Setters      */
+    /********************************/
     public Item getItem() {
         return item;
     }

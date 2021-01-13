@@ -21,14 +21,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
 @Controller
-public class ClientController {
-
+public class ClientController
+{
+    /********************************/
+    /*           Variables          */
+    /********************************/
     @Autowired
     private RestTemplate restTemplate;
 
     @Autowired
     private Session session;
 
+    /********************************/
+    /*           Methodes           */
+    /********************************/
     @GetMapping("/user")
     public String listUserCommands(Model model,
                                    HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
@@ -45,7 +51,8 @@ public class ClientController {
             if(commande != null)
             {
                 commandes.add(commande);
-                for (OrderItem item: commande.getItems()) {
+                for (OrderItem item: commande.getItems())
+                {
                     StockResult stockres = restTemplate.getForObject("http://stock/article/" + item.getIdArticle() + "?think=" + item.getQuantity(), StockResult.class);
                     item.setName(stockres.getItem().getName());
                 }
