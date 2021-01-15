@@ -55,7 +55,6 @@ public class Session
                 return id;
             }
             return -1;
-
         }
         else
         {
